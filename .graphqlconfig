@@ -1,0 +1,15 @@
+{
+  "name": "Main GraphQL Schema",
+  "schemaPath": "main.graphql",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "http://www.euro2021.przemq20.ct8.pl/graphql",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": true
+      }
+    }
+  }
+}

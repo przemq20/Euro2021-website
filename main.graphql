@@ -1,0 +1,229 @@
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+type GroupNode {
+  id: ID!
+  groupName: String!
+  tournament: TournamentNode
+  teams: [TeamNode]
+}
+
+type InMatchNode {
+  playerId: ID!
+  matchId: ID!
+  startedAt: String
+  endedAt: String
+  match: MatchNode
+  player: PlayerNode
+}
+
+type MatchConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [MatchEdge]!
+}
+
+"""A Relay edge containing a `Match` and its cursor."""
+type MatchEdge {
+  """The item at the end of the edge"""
+  node: MatchNode
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type MatchNode {
+  id: ID!
+  startTime: DateTime!
+  endTime: DateTime
+  location: String!
+  goalsTeam1: Int!
+  goalsTeam2: Int!
+  playersInfo: [InMatchNode]
+  schedule: TournamentScheduleNode
+}
+
+"""An enumeration."""
+enum MatchNodeSortEnum {
+  ID_ASC
+  ID_DESC
+  START_TIME_ASC
+  START_TIME_DESC
+  END_TIME_ASC
+  END_TIME_DESC
+  LOCATION_ASC
+  LOCATION_DESC
+  GOALS_TEAM_1_ASC
+  GOALS_TEAM_1_DESC
+  GOALS_TEAM_2_ASC
+  GOALS_TEAM_2_DESC
+}
+
+"""An object with an ID"""
+interface Node {
+  """The ID of the object."""
+  id: ID!
+}
+
+"""
+The Relay compliant `PageInfo` type, containing data necessary to paginate this connection.
+"""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type PhaseNode {
+  id: ID!
+  phaseName: String!
+}
+
+type PlayerConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [PlayerEdge]!
+}
+
+"""A Relay edge containing a `Player` and its cursor."""
+type PlayerEdge {
+  """The item at the end of the edge"""
+  node: PlayerNode
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type PlayerNode {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  birthDate: String!
+  matchesInfo: [InMatchNode]
+  teams: [TeamNode]
+}
+
+"""An enumeration."""
+enum PlayerNodeSortEnum {
+  ID_ASC
+  ID_DESC
+  FIRST_NAME_ASC
+  FIRST_NAME_DESC
+  LAST_NAME_ASC
+  LAST_NAME_DESC
+  BIRTH_DATE_ASC
+  BIRTH_DATE_DESC
+}
+
+type Query {
+  """The ID of the object"""
+  node(id: ID!): Node
+  allPlayers(sort: [PlayerNodeSortEnum], before: String, after: String, first: Int, last: Int): PlayerConnection
+  allMatches(sort: [MatchNodeSortEnum], before: String, after: String, first: Int, last: Int): MatchConnection
+  allTeams(sort: [TeamNodeSortEnum], before: String, after: String, first: Int, last: Int): TeamConnection
+  allTournaments(sort: [TournamentNodeSortEnum], before: String, after: String, first: Int, last: Int): TournamentConnection
+}
+
+type TeamConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [TeamEdge]!
+}
+
+"""A Relay edge containing a `Team` and its cursor."""
+type TeamEdge {
+  """The item at the end of the edge"""
+  node: TeamNode
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type TeamNode {
+  id: ID!
+  teamName: String!
+  scheduledMatches: String
+  players: [PlayerNode]
+  groups: [GroupNode]
+  scheduledMatchesAs1: [TournamentScheduleNode]
+  scheduledMatchesAs2: [TournamentScheduleNode]
+}
+
+"""An enumeration."""
+enum TeamNodeSortEnum {
+  ID_ASC
+  ID_DESC
+  TEAM_NAME_ASC
+  TEAM_NAME_DESC
+}
+
+type TournamentConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [TournamentEdge]!
+}
+
+"""A Relay edge containing a `Tournament` and its cursor."""
+type TournamentEdge {
+  """The item at the end of the edge"""
+  node: TournamentNode
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type TournamentNode {
+  id: ID!
+  tournamentName: String!
+  startDate: String!
+  endDate: String!
+  location: String!
+  groups: [GroupNode]
+  schedules: [TournamentScheduleNode]
+}
+
+"""An enumeration."""
+enum TournamentNodeSortEnum {
+  ID_ASC
+  ID_DESC
+  TOURNAMENT_NAME_ASC
+  TOURNAMENT_NAME_DESC
+  START_DATE_ASC
+  START_DATE_DESC
+  END_DATE_ASC
+  END_DATE_DESC
+  LOCATION_ASC
+  LOCATION_DESC
+}
+
+type TournamentScheduleNode {
+  id: ID!
+  matchTime: DateTime!
+  matchLocation: String!
+  phase: PhaseNode
+  tournament: TournamentNode
+  match: [MatchNode]
+  team1: TeamNode
+  team2: TeamNode
+}
+
