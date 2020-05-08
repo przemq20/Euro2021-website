@@ -2,8 +2,8 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
-import {Observable, of as observableOf, merge, of, Subject} from 'rxjs';
-import {TournamentDetailsService} from '../tournament-details.service';
+import {Observable, of as observableOf, merge, of, Subject, Subscription} from 'rxjs';
+import {GraphqlService} from '../graphql.service';
 import {GroupModel, TeamGroupInfo} from '../../model/group.model';
 
 
@@ -17,8 +17,9 @@ export class GroupTablesDataSource extends DataSource<TeamGroupInfo> {
   sort: MatSort;
   private selectedGroup = 0;
   private group$ = new Subject();
+  private dataSub: Subscription;
 
-  constructor(private service: TournamentDetailsService) {
+  constructor(private service: GraphqlService) {
     super();
   }
 
@@ -33,7 +34,7 @@ export class GroupTablesDataSource extends DataSource<TeamGroupInfo> {
       this.sort.sortChange,
       this.group$
     ];
-    this.service.groups$.subscribe(value => {
+    this.dataSub = this.service.groups$.subscribe(value => {
       this.data = value;
     });
 
@@ -49,7 +50,9 @@ export class GroupTablesDataSource extends DataSource<TeamGroupInfo> {
    *  Called when the table is being destroyed. Use this function, to clean up
    * any open connections or free any held resources that were set up during connect.
    */
-  disconnect() {}
+  disconnect() {
+    this.dataSub.unsubscribe();
+  }
 
   /**
    * Sort the data (client-side). If you're using server-side sorting,

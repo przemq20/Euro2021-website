@@ -117,6 +117,7 @@ type PlayerNode {
   birthDate: String!
   matchesInfo: [InMatchNode]
   teams: [TeamNode]
+  currentTeam: TeamNode
 }
 
 """An enumeration."""
@@ -163,6 +164,7 @@ type TeamNode {
   scheduledMatches: String
   players: [PlayerNode]
   groups: [GroupNode]
+  currentPlayers: [PlayerNode]
   scheduledMatchesAs1: [TournamentScheduleNode]
   scheduledMatchesAs2: [TournamentScheduleNode]
 }

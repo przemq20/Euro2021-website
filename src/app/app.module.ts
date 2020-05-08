@@ -15,17 +15,20 @@ import { GroupTablesComponent } from './group-tables/group-tables.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import {TournamentDetailsService} from './tournament-details.service';
+import {GraphqlService} from './graphql.service';
 import {Apollo, ApolloModule} from 'apollo-angular';
 import {HttpLinkModule} from 'apollo-angular-link-http';
 import {HttpClientModule} from '@angular/common/http';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { PlayersTableComponent } from './players-table/players-table.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainViewComponent,
     GroupTablesComponent,
+    PlayersTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,10 +46,11 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     ApolloModule,
     HttpLinkModule,
     HttpClientModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    FlexLayoutModule
   ],
   providers: [
-    TournamentDetailsService
+    GraphqlService
   ],
   bootstrap: [AppComponent]
 })

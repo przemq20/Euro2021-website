@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {GraphqlService} from '../graphql.service';
 
 @Component({
   selector: 'app-main-view',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./main-view.component.css']
 })
 export class MainViewComponent {
-  constructor() {}
+  constructor(public service: GraphqlService) {}
 }

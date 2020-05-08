@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { GroupTablesDataSource } from './group-tables-datasource';
-import {TournamentDetailsService} from '../tournament-details.service';
+import {GraphqlService} from '../graphql.service';
 import {TeamGroupInfo} from '../../model/group.model';
 import {map} from 'rxjs/operators';
 
@@ -23,7 +23,7 @@ export class GroupTablesComponent implements AfterViewInit, OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['teamName'];
 
-  constructor(private service: TournamentDetailsService) {
+  constructor(private service: GraphqlService) {
   }
 
   onSelectedGroupChange(val) {

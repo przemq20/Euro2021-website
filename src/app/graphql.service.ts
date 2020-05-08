@@ -7,6 +7,7 @@ import gql from 'graphql-tag';
 import {map} from 'rxjs/operators';
 import {GroupModel} from '../model/group.model';
 import {Observable} from 'rxjs';
+import {PlayerModel} from '../model/player.model';
 
 const GROUP_QUERY =
   gql`query AllTournaments{
@@ -25,14 +26,52 @@ const GROUP_QUERY =
     }
   }`;
 
+const ALL_PLAYERS_QUERY =
+  gql`query AllPlayers {
+          allPlayers{
+              edges{
+                  node{
+                      firstName,
+                      lastName,
+                      birthDate,
+                      currentTeam {
+                          teamName,
+                      }
+                  }
+              }
+          }
+      }
+  `
+
 @Injectable({
   providedIn: 'root'
 })
-export class TournamentDetailsService {
+export class GraphqlService {
   private groupsQuery: QueryRef<any>;
+  private allPlayersQuery: QueryRef<any>;
 
   public refetchGroups() {
     this.groupsQuery.refetch();
+  }
+
+  get allPlayers$(): Observable<PlayerModel[]> {
+    return this.allPlayersQuery.valueChanges.pipe(
+      map(value => {
+        console.log(value);
+        console.log(value
+          .data
+          .allPlayers
+          .edges.map(value1 => {
+            return value1.node as PlayerModel;
+          }) as PlayerModel[]);
+        return value
+          .data
+          .allPlayers
+          .edges.map(value1 => {
+              return value1.node as PlayerModel;
+          }) as PlayerModel[];
+      })
+    );
   }
 
   get groups$(): Observable<GroupModel[]> {
@@ -58,6 +97,11 @@ export class TournamentDetailsService {
     this.groupsQuery  = apollo.watchQuery({
       query: GROUP_QUERY,
       pollInterval: 10 * 1000,
+    });
+
+    this.allPlayersQuery = apollo.watchQuery({
+      query: ALL_PLAYERS_QUERY,
+      pollInterval: 30 * 1000,
     });
 
   }
