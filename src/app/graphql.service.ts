@@ -57,13 +57,6 @@ export class GraphqlService {
   get allPlayers$(): Observable<PlayerModel[]> {
     return this.allPlayersQuery.valueChanges.pipe(
       map(value => {
-        console.log(value);
-        console.log(value
-          .data
-          .allPlayers
-          .edges.map(value1 => {
-            return value1.node as PlayerModel;
-          }) as PlayerModel[]);
         return value
           .data
           .allPlayers

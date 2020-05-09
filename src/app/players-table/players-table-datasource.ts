@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
-import {Observable, of as observableOf, merge, Subscription} from 'rxjs';
+import {Observable, merge, Subscription, Subject} from 'rxjs';
 import {PlayerModel} from '../../model/player.model';
 
 
@@ -11,6 +11,7 @@ export class PlayersTableDataSource extends DataSource<PlayerModel> {
   paginator: MatPaginator;
   sort: MatSort;
   dataSub: Subscription;
+  updateData$ = new Subject<void>();
 
   constructor(private playerData$: Observable<PlayerModel[]>) {
     super();
@@ -25,7 +26,7 @@ export class PlayersTableDataSource extends DataSource<PlayerModel> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
-      this.playerData$,
+      this.updateData$,
       this.paginator.page,
       this.sort.sortChange
     ];
@@ -39,13 +40,16 @@ export class PlayersTableDataSource extends DataSource<PlayerModel> {
         }
         return value1;
       });
+      this.paginator.length = this.data.length;
+      this.updateData$.next();
     });
 
-    return merge(...dataMutations).pipe(map(() => {
-      console.log(this.data);
 
+    return merge(...dataMutations).pipe(map(() => {
       if (this.data) {
-        return this.getSortedData(this.data);
+        // todo: move to server-side
+        const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+        return this.getSortedData(this.data).slice(startIndex, this.paginator.pageSize + startIndex);
       }
       return [];
     }));
@@ -55,16 +59,9 @@ export class PlayersTableDataSource extends DataSource<PlayerModel> {
    *  Called when the table is being destroyed. Use this function, to clean up
    * any open connections or free any held resources that were set up during connect.
    */
-  disconnect() {}
-
-  /**
-   * Paginate the data (client-side). If you're using server-side pagination,
-   * this would be replaced by requesting the appropriate data from the server.
-   */
-  // private getPagedData(data: PlayersTableItem[]) {
-  //   const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-  //   return data.splice(startIndex, this.paginator.pageSize);
-  // }
+  disconnect() {
+    this.dataSub.unsubscribe();
+  }
   //
   // /**
   //  * Sort the data (client-side). If you're using server-side sorting,
