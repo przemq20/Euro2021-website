@@ -1,0 +1,11 @@
+<br />
+<h1>Lista zawodników</h1>
+<div style="padding: 30px;">
+  <mat-card class="dashboard-card">
+    <mat-card-content class="dashboard-card-content">
+      <app-players-table
+        [playersData]="this.service.allPlayers$"
+      ></app-players-table>
+    </mat-card-content>
+  </mat-card>
+</div>

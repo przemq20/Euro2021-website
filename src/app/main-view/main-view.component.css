@@ -1,18 +1,37 @@
-.grid-container {
-  margin: 20px;
-}
-
-.row {
-  margin-top: 50px;
-}
-
-
-.more-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-}
-
-.dashboard-card-content {
+#title {
   text-align: center;
+  margin: auto;
+  margin-top: 30px;
+}
+
+mat-card {
+  padding: 20px;
+}
+.news {
+  padding: 20px;
+}
+
+mat-card img {
+  object-fit: cover; /*this makes the image in src fit to the size specified below*/
+  width: 100%; /* Here you can use wherever you want to specify the width and also the height of the <img>*/
+  height: 100%;
+}
+iframe {
+  height: 100%;
+  display: block;
+  margin: auto;
+}
+
+.video {
+  text-align: center;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+p {
+  font-size: 18px;
+  text-align: justify;
+  line-height: 1.5;
 }

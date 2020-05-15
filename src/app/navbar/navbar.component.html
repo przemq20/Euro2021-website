@@ -1,0 +1,19 @@
+<mat-toolbar color="secondary" class="navbar">
+  <div>
+    <div>
+      <a mat-icon-button [routerLink]="'/'">
+        <img src="../../assets/1200px-UEFA_Euro_2020_Logo.svg.png"
+      /></a>
+      <span class="menu-spacer"></span>
+
+      <a mat-button [routerLink]="'/'" id="title"> <h1>EURO 2021</h1> </a>
+    </div>
+  </div>
+  <span class="menu-spacer"></span>
+  <div>
+    <a mat-button [routerLink]="'/players'"> Zawodnicy </a>
+    <a mat-button [routerLink]="'/groups'"> Grupy </a>
+    <a mat-button [routerLink]="'/matches'"> Przyszłe mecze </a>
+    <a mat-button [routerLink]="'/teams'"> Drużyny </a>
+  </div>
+</mat-toolbar>

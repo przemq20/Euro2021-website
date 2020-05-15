@@ -3,14 +3,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { GroupTablesDataSource } from './group-tables-datasource';
-import {GraphqlService} from '../graphql.service';
-import {TeamGroupInfo} from '../../model/group.model';
-import {map} from 'rxjs/operators';
+import { GraphqlService } from '../graphql.service';
+import { TeamGroupInfo } from '../../model/group.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-group-tables',
   templateUrl: './group-tables.component.html',
-  styleUrls: ['./group-tables.component.css']
+  styleUrls: ['./group-tables.component.css'],
 })
 export class GroupTablesComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort: MatSort;
@@ -21,10 +21,9 @@ export class GroupTablesComponent implements AfterViewInit, OnInit {
   dataSource: GroupTablesDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['teamName'];
+  displayedColumns = ['teamName', 'points'];
 
-  constructor(private service: GraphqlService) {
-  }
+  constructor(private service: GraphqlService) {}
 
   onSelectedGroupChange(val) {
     this.dataSource.changeGroup(val);
@@ -33,7 +32,7 @@ export class GroupTablesComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     this.dataSource = new GroupTablesDataSource(this.service);
     this.groupNames$ = this.service.groups$.pipe(
-      map(value => value.map(value1 => value1.groupName))
+      map((value) => value.map((value1) => value1.groupName))
     );
   }
 

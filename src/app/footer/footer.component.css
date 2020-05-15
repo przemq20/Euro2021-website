@@ -1,0 +1,21 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+p {
+  text-align: center;
+  font-size: 10px;
+  margin: auto;
+}
+
+mat-toolbar {
+  justify-content: center;
+  text-align: center;
+}
+
+.title-center {
+  margin: auto;
+  font-size: 11px;
+}

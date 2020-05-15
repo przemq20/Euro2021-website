@@ -1,30 +1,67 @@
-<div class="grid-container">
-  <h1 class="mat-h1">Dashboard</h1>
-  <div fxLayout="row wrap" fxLayoutGap="15px">
-    <div fxFlex="20">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            Grupy
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content">
-          <app-group-tables></app-group-tables>
-        </mat-card-content>
-      </mat-card>
-    </div>
+<div fxLayout="row">
+  <div fxFlex="100" class="groups">
+    <h1 id="title">Nieoficjalna strona EURO 2021</h1>
+  </div>
+</div>
+<br />
+<div fxLayout="row">
+  <div fxFlex="25" class="news">
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>
+          Euro zachowa swoją nazwę!
+        </mat-card-title>
+      </mat-card-header>
+      <hr />
+      <mat-card-content class="dashboard-card-content">
+        <img src="../../assets/1200px-UEFA_Euro_2020_Logo.svg.png" />
+        <hr />
+        <p>Mimo zmiany daty nazwa turnieju pozostaje ta sama.</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
-    <div fxFlex="75">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            Lista zawodników
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content">
-          <app-players-table [playersData]="this.service.allPlayers$"></app-players-table>
-        </mat-card-content>
-      </mat-card>
-    </div>
+  <div fxFlex="40" class="news">
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>
+          Przeżyjmy to jeszcze raz!
+        </mat-card-title>
+      </mat-card-header>
+      <hr />
+      <mat-card-content class="dashboard-card-content">
+        <div class="video">
+          <iframe
+            src="https://www.youtube.com/embed/JUma5TvPx0E"
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex="35" class="news">
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>
+          EURO 2020
+        </mat-card-title>
+      </mat-card-header>
+      <hr />
+
+      <mat-card-content class="dashboard-card-content">
+        <p>
+          Mistrzostwa Europy w Piłce Nożnej 2020, oficjalnie UEFA Euro 2020 –
+          szesnasty turniej o mistrzostwo Europy w piłce nożnej mężczyzn.
+          Turniej zaplanowany był w 12 miastach-gospodarzach w 12 różnych
+          państwach, w dniach od 11 czerwca do 11 lipca 2021 roku. Tytułu ma
+          bronić reprezentacja Portugalii, zwycięzca UEFA Euro 2016. Po raz
+          pierwszy w historii tych rozgrywek podczas turnieju ma zostać użyty
+          system wideoweryfikacji VAR.
+        </p>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

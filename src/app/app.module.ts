@@ -15,13 +15,20 @@ import { GroupTablesComponent } from './group-tables/group-tables.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import {GraphqlService} from './graphql.service';
-import {Apollo, ApolloModule} from 'apollo-angular';
-import {HttpLinkModule} from 'apollo-angular-link-http';
-import {HttpClientModule} from '@angular/common/http';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { GraphqlService } from './graphql.service';
+import { Apollo, ApolloModule } from 'apollo-angular';
+import { HttpLinkModule } from 'apollo-angular-link-http';
+import { HttpClientModule } from '@angular/common/http';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { PlayersTableComponent } from './players-table/players-table.component';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { NavbarComponent } from './navbar/navbar.component';
+import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
+import { PlayersComponent } from './players/players.component';
+import { GroupsComponent } from './groups/groups.component';
+import { TeamsComponent } from './teams/teams.component';
+import { FooterComponent } from './footer/footer.component';
+import { FutureMatchesComponent } from './future-matches/future-matches.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +36,12 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MainViewComponent,
     GroupTablesComponent,
     PlayersTableComponent,
+    NavbarComponent,
+    PlayersComponent,
+    GroupsComponent,
+    TeamsComponent,
+    FooterComponent,
+    FutureMatchesComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,11 +60,10 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     HttpLinkModule,
     HttpClientModule,
     MatButtonToggleModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatToolbarModule,
   ],
-  providers: [
-    GraphqlService
-  ],
-  bootstrap: [AppComponent]
+  providers: [GraphqlService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
