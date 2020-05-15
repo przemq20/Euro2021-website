@@ -9,6 +9,7 @@ import { GroupModel } from '../model/group.model';
 import { Observable } from 'rxjs';
 import { PlayerModel } from '../model/player.model';
 import { MatchModel } from '../model/match.model';
+import { TeamModel } from '../model/team.model';
 
 const GROUP_QUERY = gql`
   query AllTournaments {
@@ -46,8 +47,7 @@ const ALL_PLAYERS_QUERY = gql`
 `;
 
 const ALL_MATCHES_QUERY = gql`
-  {
-    query
+  query AllTournaments {
     allTournaments {
       edges {
         node {
@@ -63,6 +63,30 @@ const ALL_MATCHES_QUERY = gql`
             phase {
               id
             }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const ALL_TEAMS_QUERY = gql`
+  query AllTeams {
+    allTeams {
+      edges {
+        node {
+          teamName
+          scheduledMatchesAs1 {
+            team2 {
+              teamName
+            }
+            phase {
+              id
+            }
+          }
+          currentPlayers {
+            firstName
+            lastName
           }
         }
       }
