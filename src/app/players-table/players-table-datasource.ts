@@ -2,9 +2,8 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
-import {Observable, merge, Subscription, Subject} from 'rxjs';
-import {PlayerModel} from '../../model/player.model';
-
+import { Observable, merge, Subscription, Subject } from 'rxjs';
+import { PlayerModel } from '../../model/player.model';
 
 export class PlayersTableDataSource extends DataSource<PlayerModel> {
   data: PlayerModel[] = [];
@@ -28,14 +27,14 @@ export class PlayersTableDataSource extends DataSource<PlayerModel> {
     const dataMutations = [
       this.updateData$,
       this.paginator.page,
-      this.sort.sortChange
+      this.sort.sortChange,
     ];
 
-    this.dataSub = this.playerData$.subscribe(value => {
-      this.data = value.map(value1 => {
+    this.dataSub = this.playerData$.subscribe((value) => {
+      this.data = value.map((value1) => {
         if (!value1.currentTeam) {
           const retval = value1;
-          value1.currentTeam = {teamName: ''};
+          value1.currentTeam = { teamName: '' };
           return retval;
         }
         return value1;
@@ -44,15 +43,19 @@ export class PlayersTableDataSource extends DataSource<PlayerModel> {
       this.updateData$.next();
     });
 
-
-    return merge(...dataMutations).pipe(map(() => {
-      if (this.data) {
-        // todo: move to server-side
-        const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-        return this.getSortedData(this.data).slice(startIndex, this.paginator.pageSize + startIndex);
-      }
-      return [];
-    }));
+    return merge(...dataMutations).pipe(
+      map(() => {
+        if (this.data) {
+          // todo: move to server-side
+          const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+          return this.getSortedData(this.data).slice(
+            startIndex,
+            this.paginator.pageSize + startIndex
+          );
+        }
+        return [];
+      })
+    );
   }
 
   /**
@@ -75,10 +78,16 @@ export class PlayersTableDataSource extends DataSource<PlayerModel> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'firstName': return compare(a.firstName, b.firstName, isAsc);
-        case 'lastName': return compare(a.lastName, b.lastName, isAsc);
-        case 'teamName': return compare(a.currentTeam.teamName, b.currentTeam.teamName, isAsc);
-        default: return 0;
+        case 'firstName':
+          return compare(a.firstName, b.firstName, isAsc);
+        case 'lastName':
+          return compare(a.lastName, b.lastName, isAsc);
+        case 'teamName':
+          return compare(a.currentTeam.teamName, b.currentTeam.teamName, isAsc);
+        case 'birthDate':
+          return compareDate(a.birthDate, b.birthDate, isAsc);
+        default:
+          return 0;
       }
     });
   }
@@ -86,5 +95,9 @@ export class PlayersTableDataSource extends DataSource<PlayerModel> {
 
 /** Simple sort comparator for example ID/Name columns (for client-side sorting). */
 function compare(a: string | number, b: string | number, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
+
+function compareDate(a: Date, b: Date, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
